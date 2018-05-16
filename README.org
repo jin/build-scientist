@@ -38,13 +38,13 @@ sandbox_experiment.run!
 
 ** Instructions
 
-#+BEGIN_VERSE
+   #+BEGIN_SRC bash 
 $ git clone https://github.com/jin/build-scientist
 $ cd build-scientist
 $ cp sample_experiment.rb my_experiment.rb 
 $ vi my_experiment.rb # fiddle with my_experiment.rb
 $ ruby my_experiment.rb # collect results
-#+END_VERSE
+   #+END_SRC
 
 ** Attributions
 
