@@ -11,7 +11,6 @@ require_relative './scientist.rb'
 control = BazelInvocation.new
           .set_workspace("/my/workspace")
           .set_target("//my:target")
-          .set_label("jobs_default")
           .clean # Do a `bazel clean` before each build
           .sandboxing(false) # Disable sandboxing with --spawn_strategy=standalone
           .profiling(true) # Enable profilng with --profile=${label}_prof.dat
@@ -20,7 +19,6 @@ control = BazelInvocation.new
 candidate = BazelInvocation.new
           .set_workspace("/my/workspace")
           .set_target("//my:target")
-          .set_label("jobs_2")
           .clean
           .sandboxing(false)
           .profiling(true)
@@ -30,11 +28,14 @@ candidate = BazelInvocation.new
 ENV['ANDROID_HOME'] = '/path/to/sdk'
 
 # Create an experiment with the two invocations
-sandbox_experiment = Experiment.new(control, candidate)
-sandbox_experiment.warmup_runs = 1
-sandbox_experiment.measured_runs = 3
-sandbox_experiment.run!
+experiment = Experiment.new(control, candidate)
+experiment.warmup_runs = 1
+experiment.measured_runs = 3
+experiment.run!
   #+END_SRC
+
+At the end of the run, the profile files will be available for analysis in the
+workspace directory, and the wall times for the runs printed out on stdout.
 
 ** Instructions
 
