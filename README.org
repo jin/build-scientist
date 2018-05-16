@@ -48,6 +48,4 @@ $ ruby my_experiment.rb # collect results
 
 ** Attributions
 
-   Inspired by
-   [https://github.com/github/scientist](Scientist) and
-   [https://github.com/gradle/gradle-profiler](gradle-profiler).
+   Inspired by [[https://github.com/github/scientist][Scientist]] and [[https://github.com/gradle/gradle-profiler][gradle-profiler]].
