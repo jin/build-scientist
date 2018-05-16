@@ -31,7 +31,7 @@ class Experiment
     1.upto @measured_runs do |idx|
       puts "Measured run for control: Iteration #{idx}"
       @control_invocation.set_label "control_measured_#{idx}"
-      control_ary.push(@control_invocation.invoke!.wall_mills)
+      control_ary.push(@control_invocation.invoke!.wall_millis)
     end
 
     control_ary
