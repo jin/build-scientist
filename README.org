@@ -1,0 +1,53 @@
+* Build Scientist
+
+  A library to create simple experiments for your build system. 
+
+  Create simple, tweakable experiments that look like this:
+  
+  #+BEGIN_SRC ruby
+require_relative './scientist.rb'
+
+# Create your Control invocation
+control = BazelInvocation.new
+          .set_workspace("/my/workspace")
+          .set_target("//my:target")
+          .set_label("jobs_default")
+          .clean # Do a `bazel clean` before each build
+          .sandboxing(false) # Disable sandboxing with --spawn_strategy=standalone
+          .profiling(true) # Enable profilng with --profile=${label}_prof.dat
+
+# Create the Candidate invocation with something different from the control.
+candidate = BazelInvocation.new
+          .set_workspace("/my/workspace")
+          .set_target("//my:target")
+          .set_label("jobs_2")
+          .clean
+          .sandboxing(false)
+          .profiling(true)
+          .add_flag("--jobs=2") # Limit the number of jobs to 2
+
+# Set your environment variables
+ENV['ANDROID_HOME'] = '/path/to/sdk'
+
+# Create an experiment with the two invocations
+sandbox_experiment = Experiment.new(control, candidate)
+sandbox_experiment.warmup_runs = 1
+sandbox_experiment.measured_runs = 3
+sandbox_experiment.run!
+  #+END_SRC
+
+** Instructions
+
+#+BEGIN_VERSE
+$ git clone https://github.com/jin/build-scientist
+$ cd build-scientist
+$ cp sample_experiment.rb my_experiment.rb 
+$ vi my_experiment.rb # fiddle with my_experiment.rb
+$ ruby my_experiment.rb # collect results
+#+END_VERSE
+
+** Attributions
+
+   Inspired by
+   [Scientist](https://github.com/github/scientist) and
+   [gradle-profiler](https://github.com/gradle/gradle-profiler).
